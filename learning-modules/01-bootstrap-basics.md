@@ -49,8 +49,58 @@ File `index.html`:
 
 ### Bootstrap Basics
 
-Follow along the instructor and open this [link to bootstrap layout](https://getbootstrap.com/docs/4.0/layout/overview/).
+The instructor will walk you through the following. Use these links to open up the documentation.
 
-(Instructor will walk you through containers)
+#### 01 - Containers
+Follow [this link to the documentation](https://getbootstrap.com/docs/4.0/layout/overview/).
 
-Next would be [bootstrap's grid system](https://getbootstrap.com/docs/4.0/layout/grid/).
+Quick Notes:
+
+Class `.container` is for traditional websites that has equal margin on both left and right while you will likely `.container-fluid` for admin/cms side of things where you want the full width.
+
+| Container Class   | Common use case |
+|-------------------|-------------------------------|
+| .container        | Classic style websites, blogs |
+| .container-fluid  | Modern style websites, admin, anything full width |
+
+
+#### 02 - Grid System
+
+Follow [this link to the documentation](https://getbootstrap.com/docs/4.0/layout/grid/).
+
+Some Notes:
+Bootstrap 3's grid system is very different from bootstrap 4's. Bootstrap 4 uses a more flexible grid system by using the modern css's `flex box` which you can [read more from here](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox).
+
+Rough estimate of responsive breakpoints
+
+| Responsive Break Point | Close Sample             |
+|------------------------|--------------------------|
+| xs (575.98px max) | Iphone 5s and smaller devices |
+| sm (767.98px max) | Iphone 7 size devices |
+| md (991.98px max) | Tablets |
+| lg (1199.98px max) | Desktop Computers |
+
+### Let's Do it Ourselves: Banner + Testimonials
+
+We'll be making use of `container` and the `grid system`.
+
+__Best Practices!__
+    
+- Mobile First
+- Use different assets per device size
+
+Download a banner of your choice and create smaller copies of it. Do this at least twice for `sm` and `xs` devices and for `lg` and `md` desktops/tablets. (You can use paint for this and reduce the size by percentage).
+
+Enable mobile building
+Press `F12` and press `Ctrl` + `Shift` + `M` or find and click the `Toggle device toolbar`.
+
+#### Steps
+
+- 1   Create folder img/banner/01
+- 2   Copy the banner of your choice
+- 3   Create smaller copies according our responsive breakpoint table above
+- 4   Create a carousel using: [link to bootstrap documentation](https://getbootstrap.com/docs/4.0/components/carousel/)
+
+Tip: add class `.p-0` to remove padding completely, we'll use this for our `.container-fluid` container.
+
+Tip: use `<picture>` with media sources to show/hide image depending on the screen size. Use [container](https://getbootstrap.com/docs/4.0/layout/overview/)'s media sizes as reference.

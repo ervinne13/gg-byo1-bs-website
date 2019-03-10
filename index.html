@@ -14,12 +14,43 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
-    />
+		/>
+		
+		<link rel="stylesheet" href="/css/index.css" />
 
     <title>Hello, bootstrap!</title>
   </head>
   <body>
-    <h1>Hello, bootstrap!</h1>
+    <div class="container-fluid p-0">
+      <div class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+						<picture>
+							<source media="(min-width: 1200px)" srcset="/img/banner/01/default.jpg">
+							<source media="(min-width: 992px)" srcset="/img/banner/01/lg.jpg">
+							<source media="(min-width: 768px)" srcset="/img/banner/01/md.jpg">
+							<source media="(min-width: 576px)" srcset="/img/banner/01/sm.jpg">
+							<source media="(max-width: 575px)" srcset="/img/banner/01/xs.jpg">
+							<img src="/img/banner/01/default.jpg" alt="Website Banner" />
+						</picture>
+						<div class="carousel-caption text-left d-xs-block d-sm-none">
+							<h5>Ervinne Sodusta</h5>
+							<p>Software Engineering Team Lead</p>
+						</div>
+            <div class="carousel-caption text-left d-none d-sm-block d-xl-none">
+              <h4>Ervinne Sodusta</h4>
+							<h5>Software Engineering Team Lead</h5>
+							<p>(Products Development Team)</p>
+						</div>
+						<div class="carousel-caption carousel-caption-top text-left d-none d-xl-block">
+							<h1>Ervinne Sodusta</h1>
+							<h3>Software Engineering Team Lead</h3>
+							<h4>(Products Development Team)</h4>
+						</div>
+		  		</div>
+        </div>
+      </div>
+    </div>
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
