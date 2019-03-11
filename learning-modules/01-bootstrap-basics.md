@@ -104,3 +104,7 @@ Press `F12` and press `Ctrl` + `Shift` + `M` or find and click the `Toggle devic
 Tip: add class `.p-0` to remove padding completely, we'll use this for our `.container-fluid` container.
 
 Tip: use `<picture>` with media sources to show/hide image depending on the screen size. Use [container](https://getbootstrap.com/docs/4.0/layout/overview/)'s media sizes as reference.
+
+Tip: Choosing Fonts, you may use [google fonts](https://fonts.google.com/), we'll be using [open sans](https://fonts.google.com/specimen/Open+Sans).
+
+If you want to know more about typography (what's Serif, Sans Serif,etc.) [click here](https://www.youtube.com/watch?v=sByzHoiYFX0).
