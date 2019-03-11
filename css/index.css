@@ -1,0 +1,27 @@
+
+body {
+    font-family: 'Open Sans', helvetica, arial, sans-serif;
+}
+
+.carousel-caption-top {
+    top: 120px;
+    bottom: 0px;
+}
+
+.carousel-caption h1.hero {
+    font-size: 6.5rem;
+}
+
+.light-bg {
+    background: #fff;
+}
+
+.light-grey-bg {
+    background: #f4f4f4;
+}
+
+.form-container {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 600px;
+}
