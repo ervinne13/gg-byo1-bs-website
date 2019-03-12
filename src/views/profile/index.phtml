@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <?= view('common.global-meta') ?>
+        <?= view('common.bootstrap-css') ?>
+        <?= view('common.global-fonts-and-icons') ?>
+        <title>Ervinne Sodusta | Online Profile</title>
+
+        <link rel="stylesheet" href="/css/index.css" />
+    </head>
+    <body>
+        <div class="container-fluid p-0">
+            <?= view('profile.carousel') ?>
+
+            <div class="light-grey-bg p-5">
+                <?= view('profile.skillset') ?>
+            </div>
+
+            <div class="light-bg p-5">
+                <?= view('profile.referrals') ?>
+            </div>
+
+            <div class="light-grey-bg p-5">
+                <?= view('profile.contact-form') ?>
+            </div>
+        </div>
+
+        <?= view('common.bootstrap-js') ?>
+    </body>
+</html>

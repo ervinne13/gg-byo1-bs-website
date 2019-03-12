@@ -86,10 +86,26 @@ File `view_loader_functions.php`:
 ```php
 <?php
 
+/**
+ * Displays the specified view described in dot notation starting from the 'views' folder.
+ * 
+ * @param $view 
+ *      The view to be displayed in dot notation.
+ *      Example: displaying a view in /src/views/profile/index.php, 
+ *      you may call this function with: view('profile.index')
+ * @param $data
+ *      Associative array representation of the variables you want
+ *      your view to be able to access.
+ *      Example: specifying [ 'name' => 'Ervinne' ] will enable the
+ *      view to make use of a variable $name which contains the value
+ *      'Ervinne'
+ * 
+ * @return void
+ */
 function view($view, $data = []) {
     //  Creates variables and encloses it in this scope
     extract($data);
-    require(dot_to_path("src.views.$view") . '.php');
+    require(dot_to_path("src.views.$view") . '.phtml');
 }
 ```
 
@@ -97,55 +113,235 @@ Listen to the instructor as he demonstrate the use of "scoping" the variables th
 
 #### Common Files Contents
 
-File: `global-meta.phtml`
+File: `src/views/common/global-meta.phtml`
 Justification: One place to update meta tags that apply to ALL our pages.
 
 ```html
 <!-- Required meta tags -->
 <meta charset="utf-8" />
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no"
-/>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 ```
 
-File: `global-fonts-and-icons.phtml`
+File: `src/views/common/global-fonts-and-icons.phtml`
 Justification: One place to update meta tags that apply to ALL our pages.
 
 ```html
-<link 
-    href="https://fonts.googleapis.com/css?family=Roboto|Open+Sans" rel="stylesheet">
-<link 
-    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
-    rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 ```
 
-File: `bootstrap-css.phtml`
+File: `src/views/common/bootstrap-css.phtml`
 Justification: Upgrading & maintaining depdencies
 ```html
-<link
-    rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous"
-/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 ```
 
-File: `bootstrap-js.phtml`
+File: `src/views/common/bootstrap-js.phtml`
 Justification: Upgrading & maintaining depdencies
 ```html
-<script
-    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"
-></script>
-<script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"
-></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" ></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 ```
 
 #### Specific Page (Profile) File Contents
 
-Here, `index` will be the main page or container of our all our 
+Here, `index` will be the main page or container of our all our sub components. Let's `stitch` first our index.phtml with the common files.
+
+File: `src/views/profile/index.phtml`
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <?= view('common.global-meta') ?>
+        <?= view('common.bootstrap-css') ?>
+        <?= view('common.global-fonts-and-icons') ?>
+        <title>Ervinne Sodusta | Online Profile</title>
+    </head>
+    <body>
+        <div class="container-fluid p-0">
+            <!-- Other content will be put here after -->
+        </div>
+
+        <?= view('common.bootstrap-js') ?>
+    </body>
+</html>
+```
+
+#### Creating the Sub Components of Specific Page (Profile)
+
+File `src/views/profile/carousel.phtml`
+```html
+<div class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <picture>
+                <source media="(min-width: 1200px)" srcset="/img/banner/01/default.jpg">
+                <source media="(min-width: 992px)" srcset="/img/banner/01/lg.jpg">
+                <source media="(min-width: 768px)" srcset="/img/banner/01/md.jpg">
+                <source media="(min-width: 576px)" srcset="/img/banner/01/sm.jpg">
+                <source media="(max-width: 575px)" srcset="/img/banner/01/xs.jpg">
+                <img src="/img/banner/01/default.jpg" alt="Website Banner" />
+            </picture>
+            <div class="carousel-caption text-left d-xs-block d-sm-none">
+                <h5>Ervinne Sodusta</h5>
+                <p>Software Engineering Team Lead</p>
+            </div>
+        <div class="carousel-caption text-left d-none d-sm-block d-xl-none">
+            <h4>Ervinne Sodusta</h4>
+                <h5>Software Engineering Team Lead</h5>
+                <p>(Products Development Team)</p>
+            </div>
+            <div class="carousel-caption carousel-caption-top text-left d-none d-xl-block">
+                <h3>Hi there, I'm </h3>
+                <h1 class="hero">Ervinne Sodusta</h1>
+                <h3>Software Engineering Team Lead</h3>
+                <h4>(Products Development Team)</h4>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+File `src/views/profile/skillset.phtml`
+```html
+<div class="row">
+    <div class="col-sm text-center">
+        <h1>My Skillset</h1>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm">
+        <h3>Full Stack Development</h3>
+        <p>
+            Experienced full stack developer for web, desktop/standalone, and mobile applications.
+        </p>
+    </div>
+    <div class="col-sm">
+        <h3>Architecture & Resource Management</h3>
+        <p>
+            Experienced in software architecture design and planning, software development project planning and supervision where resources may work in parallel with each other.
+        </p>
+    </div>
+    <div class="col-sm">
+        <h3>Task & Time Management</h3>
+        <p>
+            Had actual field experience as a freelance software developer for 1.5 years before graduating as a computer engineering student, while maintaining academic scholarship.            
+        </p>
+    </div>
+</div>
+```
+
+File `src/views/profile/referrals.phtml`
+```html
+<div class="row ">
+    <div class="col-sm text-center">
+        <h1>Referrals</h1>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg">
+        <div class="media">
+            <img class="align-self-start mr-3" src="https://randomuser.me/api/portraits/men/18.jpg" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0">Jacob Terry</h5>
+                <p>I observe him goind the extra mile making sure his applications follow the current best practices avaiable for that tech stack. If you need someone who can write testable and maintainable software that can last years, he's the man.</p>
+                <p>He really needs to work on his front-end designing skills though as he lacks a lot in that regard.</p>
+            </div>
+        </div>
+    </div>        
+    <div class="col-lg">
+        <div class="media">
+            <img class="align-self-start mr-3" src="https://randomuser.me/api/portraits/men/93.jpg" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0">Harold Roberts</h5>
+                <p>He's our research and development person aside from his job description. He can switch from best practice to quick and dirty for a fast paced environment when trying to create demos for clients.</p>
+                <p>I would recommend making use of his broad knowledge, he knows Lotus Notes, .NET, Java, JavaScript, PHP, Python and probably lots more. Just give him his materials (books, training subscriptions).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg">
+        <div class="media">
+            <img class="align-self-start mr-3" src="https://randomuser.me/api/portraits/women/27.jpg" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0">Beatrice Olson</h5>
+                <p>Aside from being an overall reliable developer, he can assist you in managing junior developers. He's produced excellente junior developers that became seniors fast in our short time together.</p>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+File `src/views/profile/contact-form.phtml`
+```html
+<div class="text-center">
+    <h1>Contact Me</h1>
+</div>
+
+<div class="form-container">
+    <form>
+        <div class="form-group">
+            <label for="email">Your Email address</label>
+            <input type="email" class="form-control" name="email" aria-describedby="email-help" placeholder="Enter email">
+            <small id="email-help" class="form-text text-muted">... so I can contact you back, I'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" class="form-control" name="name" placeholder="Enter name">              
+        </div>
+        <div class="form-group">
+            <label for="purpose">Purpose</label>
+            <select class="form-control" name="purpose">
+                <option value="jof">Job Offer (Freelance)</option>
+                <option value="jor">Job Offer (Regular)</option>
+                <option value="o">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="purpose">Message</label>
+            <textarea class="form-control" name="purpose"></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+```
+
+#### `Stitching` The Subcomponents to Index
+
+File: `src/views/profile/index.phtml`
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <?= view('common.global-meta') ?>
+        <?= view('common.bootstrap-css') ?>
+        <?= view('common.global-fonts-and-icons') ?>
+        <title>Ervinne Sodusta | Online Profile</title>
+    </head>
+    <body>
+        <div class="container-fluid p-0">
+            <?= view('profile.carousel') ?>
+
+            <div class="light-grey-bg p-5">
+                <?= view('profile.skillset') ?>
+            </div>
+
+            <div class="light-bg p-5">
+                <?= view('profile.referrals') ?>
+            </div>
+
+            <div class="light-grey-bg p-5">
+                <?= view('profile.contact-form') ?>
+            </div>
+        </div>
+
+        <?= view('common.bootstrap-js') ?>
+    </body>
+</html>
+```

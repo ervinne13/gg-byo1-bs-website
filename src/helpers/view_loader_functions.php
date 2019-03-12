@@ -19,5 +19,5 @@
 function view($view, $data = []) {
     //  Creates variables and encloses it in this scope
     extract($data);
-    require(dot_to_path("src.views.$view") . '.php');
+    require(dot_to_path("src.views.$view") . '.phtml');
 }
