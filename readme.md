@@ -2,7 +2,7 @@
 
 ## Backgound
 
-In this workshop, we'll be working on a project that we will redo/refactor over and over to let the students have a better feel of PHP's fundamentals, from plain html, to php with requiring/including files, and finally to php with the help of composer and psr-4
+In this workshop, we'll be working on a project that we will redo/refactor over and over to let the students have a better feel of PHP's fundamentals, from plain html, to php with requiring/including files, and finally to php with the help of composer and psr-4.
 
 ## What You'll Need For This Workshop
 

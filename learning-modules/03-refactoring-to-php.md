@@ -17,13 +17,17 @@ Follow along the instructor in analyzing our webpage.
 Steps
 
 - 01 Create a new file called `index.php`.
-- 02 Create a new folder called views/profile, and views/common.
-- 03 Inside the views/common folder, create the following files:
+- 02 Redirect all traffic to `index.php`. If you're using NGINX, problem already solved by following configuration provided, if apache:
+    - Create a file called `.htaccess` beside `index.php`
+    - See content of `.htaccess` file below
+- 03 Create new folders src/views/profile, src/views/common, and src/helpers
+- 04 Create helper files `string_helper_functions.php` and `view_loader_functions`.
+- 05 Inside the src/views/common folder, create the following files:
     - global-meta.phtml
     - global-fonts-and-icons.phtml
     - bootstrap-css.phtml
     - bootstrap-js.phtml    
-- 04 Inside the views/profile folder, create the following files:
+- 06 Inside the src/views/profile folder, create the following files:
     - index.phtml
     - carousel.phtml
     - skillset.phtml
@@ -39,7 +43,57 @@ Follow along the instructor as he dissect our webpage, for your reference, the f
 This will be the `entry point` of our website. A pseudo controller of sorts that directs the application on what things to load and where the code should go.
 
 File: `index.php`
+```php
+<?php
 
+const LOCAL_PATH = __DIR__ . '/';
+
+//  Bootstrap our functions
+require_once(LOCAL_PATH . 'src/helpers/string_helper_functions.php');
+require_once(LOCAL_PATH . 'src/helpers/view_loader_functions.php');
+
+//  Let's not bother with routing for now and directly display the view instead.
+
+view('profile.index');
+```
+
+#### .htaccess Contents
+
+```
+RewriteEngine On
+RewriteCode %(REQUEST_FILENAME) !-f
+RewriteCode %(REQUEST_FILENAME) !-d
+RewriteCode %(REQUEST_FILENAME) !-l
+RewriteRule ^ index.php [QSA,L]
+```
+
+The instructor will explain this line by line, to follow along, see [Rewriting URLs](/learning-modules/03.1-rewriting-urls.md)
+
+#### Helper Contents
+
+Note that we use plural in file names if the file contains a collection of what it describes. The files we have now only contain one each but for allowance purposes of allowing more functions of their kind, let's start with plural right away.
+
+File `string_helper_functions.php`:
+```php
+<?php
+
+function dot_to_path($dotNotationString) {
+    return LOCAL_PATH . str_replace('.', '/', $dotNotationString);
+}
+```
+
+File `view_loader_functions.php`:
+```php
+<?php
+
+function view($view, $data = []) {
+    //  Creates variables and encloses it in this scope
+    extract($data);
+    require(dot_to_path("src.views.$view") . '.php');
+}
+```
+
+Listen to the instructor as he demonstrate the use of "scoping" the variables that will be used in each view (also as justification vs simply just requiring the files).
 
 #### Common Files Contents
 
