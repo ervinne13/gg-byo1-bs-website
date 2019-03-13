@@ -1,16 +1,16 @@
 # Refactoring our site to PHP
 
-### Code Size
+## Code Size
 
 In later parts of this workshop, one of the major issues that we will tackle in software development best practices is code size. In our website earlier, it's still a bit short so it's not very noticeable but that code is dirty and not very reusable.
 
 We'll be refactoring our plain html code to PHP so we can now "develop in `atoms`". See [atomic design](bradfrost.com/blog/post/atomic-web-design/) by Brad Frost.
 
-### Separation of Concerns
+## Separation of Concerns
 
 Aside from reducing code size, we'll be focusing on separation of concerns as well. You may have noticed that we `hardcoded` our values to the front-end. We basically mixed up both `presentation` concern and `data` concern.
 
-### Getting on Refactoring
+## Getting on Refactoring
 
 Follow along the instructor in analyzing our webpage.
 
@@ -38,7 +38,7 @@ Steps
 
 Follow along the instructor as he dissect our webpage, for your reference, the following should be the content of each files and should also be the output of what the instructor does.
 
-#### Index File Contents
+### Index File Contents
 
 This will be the `entry point` of our website. A pseudo controller of sorts that directs the application on what things to load and where the code should go.
 
@@ -57,7 +57,7 @@ require_once(LOCAL_PATH . 'src/helpers/view_loader_functions.php');
 view('profile.index');
 ```
 
-#### .htaccess Contents
+### .htaccess Contents
 
 ```
 RewriteEngine On
@@ -69,7 +69,7 @@ RewriteRule ^ index.php [QSA,L]
 
 The instructor will explain this line by line, to follow along, see [Rewriting URLs](/learning-modules/03.1-rewriting-urls.md)
 
-#### Helper Contents
+### Helper Contents
 
 Note that we use plural in file names if the file contains a collection of what it describes. The files we have now only contain one each but for allowance purposes of allowing more functions of their kind, let's start with plural right away.
 
@@ -111,7 +111,7 @@ function view($view, $data = []) {
 
 Listen to the instructor as he demonstrate the use of "scoping" the variables that will be used in each view (also as justification vs simply just requiring the files).
 
-#### Common Files Contents
+### Common Files Contents
 
 File: `src/views/common/global-meta.phtml`
 Justification: One place to update meta tags that apply to ALL our pages.
@@ -144,7 +144,7 @@ Justification: Upgrading & maintaining depdencies
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 ```
 
-#### Specific Page (Profile) File Contents
+### Specific Page (Profile) File Contents
 
 Here, `index` will be the main page or container of our all our sub components. Let's `stitch` first our index.phtml with the common files.
 
@@ -168,7 +168,7 @@ File: `src/views/profile/index.phtml`
 </html>
 ```
 
-#### Creating the Sub Components of Specific Page (Profile)
+### Creating the Sub Components of Specific Page (Profile)
 
 File `src/views/profile/carousel.phtml`
 ```html
@@ -312,7 +312,7 @@ File `src/views/profile/contact-form.phtml`
 </div>
 ```
 
-#### `Stitching` The Subcomponents to Index
+### `Stitching` The Subcomponents to Index
 
 File: `src/views/profile/index.phtml`
 ```html
@@ -344,4 +344,60 @@ File: `src/views/profile/index.phtml`
         <?= view('common.bootstrap-js') ?>
     </body>
 </html>
+```
+
+## Enabling Form Submission
+
+### Cleaning up Inputs (Manually)
+
+#### Removing/Returning HTML Entities
+
+|Function|Description|
+|--------|-----------|
+|htmlentities()|Removes HTML charaters (< and > in \<html\>) and converts it to encoded version|
+|html_entity_decode()|Reverse of htmlentities()|
+
+#### Filtering Variables
+
+Validates & sanitizes input. If you want to remove HTML tags entirely, use filtering instead of `htmlentities()`.
+
+```php
+<?php 
+  
+$str = "<h1>My Header</h1>"; 
+$filtered = filter_var($str, FILTER_SANITIZE_STRING); 
+echo $filtered; // My Header
+```
+
+`filter_var`'s second parameter is a PHP constant that enables us to dictate what kind of input are we filtering. The following are the available constants we can use:
+
+Common filter constants:
+
+|Filter Constant|Comments|
+|---------------|-----------|
+|FILTER_VALIDATE_IP||
+|FILTER_VALIDATE_INT||
+|FILTER_SANITIZE_STRING||
+|FILTER_VALIDATE_EMAIL||
+|FILTER_UNSAFE_RAW|No filtering will be done|
+|FILTER_DEFAULT|If no 2nd parameter specified, same as FILTER_UNSAFE_RAW|
+
+See [Types of filters](http://php.net/manual/en/filter.filters.php) as reference to all types of filters and filters belonging to each type.
+
+#### Filtering HTTP Request Inputs Directly
+
+You may use the function `filter_input()` for this.
+
+```php
+<?php
+
+//  assuming 
+
+$search_html = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_SPECIAL_CHARS);
+$search_url = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_ENCODED);
+
+echo "You have searched for $search_html.\n";
+
+//  Outputs: 
+//  You have searched for Me &#38; son.
 ```
