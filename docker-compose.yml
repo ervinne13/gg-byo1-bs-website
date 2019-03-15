@@ -1,0 +1,21 @@
+version: "3.2"
+
+services:
+  app:
+    image: ervinne/gg-byo1:7.2
+    build:
+      context: ./docker-config
+    container_name: gg-byo1-13.15
+    user: root
+    volumes:
+      # host:container
+      - ${LOCAL_PATH}:/var/www/vhost/app/gg/gg-byo1-bs-website
+    networks:
+       default:
+          ipv4_address: 192.168.13.15
+    tty: true
+    stdin_open: true
+networks:
+  default:
+    external:
+      name: docker-bridge-local
