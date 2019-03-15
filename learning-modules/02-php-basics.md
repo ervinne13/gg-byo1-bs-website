@@ -76,4 +76,8 @@ Cast Types Reference
 
 ## Control Structures
 
-## 
+Control structures `drive` a program, these are things like conditional statements and loops.
+
+## PHP & HTML
+
+One of PHP's greatest assets is that it works really well with HTML out of the box.
