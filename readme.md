@@ -78,6 +78,4 @@ If any of the command results in `command not found` or anything similar, please
 
 ## The Workshop Contents:
 
-- 01 [Bootstrap Basics](/learning-modules/01-bootstrap-basics.md)
-- 02 PHP Basics (TODO: documentation)
-- 03 [Refactoring our site to PHP](/learning-modules/03-refactoring-to-php.md)
+This is a sample activity output for GG PHP Fundamentals Workshop Series.
