@@ -1,11 +1,15 @@
 <?php
 
+require_once('vendor/autoload.php');
+
+use Dotenv\Dotenv;
+use Http\Controllers\ContactsController;
+use Http\Requests\StoreContactRequest;
+
 const LOCAL_PATH = __DIR__ . '/';
 
-//  Bootstrap our functions
-require_once(LOCAL_PATH . 'src/helpers/string_helper_functions.php');
-require_once(LOCAL_PATH . 'src/helpers/url_helper_functions.php');
-require_once(LOCAL_PATH . 'src/helpers/view_loader_functions.php');
+$dotenv = Dotenv::create(LOCAL_PATH);
+$dotenv->load();
 
 $route = get_request_route();
 switch($route) {
@@ -16,9 +20,12 @@ switch($route) {
         break;
     case '/contact':
         if (is_request_method('POST')) {
-            echo 'will be handled';
+            //  We'll refactor this later to use a better routing system.
+            $request = new StoreContactRequest();            
+            $controller = new ContactsController();
+            $controller->store($request);
         }
         break;
     default:
-        // throw new \Exception("Unhandled route {$route}");
+        throw new \Exception("Unhandled route {$route}");
 }
